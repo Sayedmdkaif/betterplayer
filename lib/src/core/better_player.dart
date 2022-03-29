@@ -10,7 +10,8 @@ import 'package:wakelock/wakelock.dart';
 
 ///Widget which uses provided controller to render video player.
 class BetterPlayer extends StatefulWidget {
-  const BetterPlayer({Key? key, required this.controller}) : super(key: key);
+
+  const BetterPlayer({Key? key, required this.controller }) : super(key: key);
 
   factory BetterPlayer.network(
     String url, {
@@ -22,6 +23,8 @@ class BetterPlayer extends StatefulWidget {
           betterPlayerDataSource:
               BetterPlayerDataSource(BetterPlayerDataSourceType.network, url),
         ),
+
+
       );
 
   factory BetterPlayer.file(
@@ -64,6 +67,9 @@ class _BetterPlayerState extends State<BetterPlayer>
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
+
+
+
   }
 
   @override
@@ -170,15 +176,25 @@ class _BetterPlayerState extends State<BetterPlayer>
       BuildContext context,
       Animation<double> animation,
       BetterPlayerControllerProvider controllerProvider) {
+
+  var width=  MediaQuery.of(context).size.width;
+  var height=  MediaQuery.of(context).size.height;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
+
         alignment: Alignment.center,
-        color: Colors.black,
-        child: controllerProvider,
+        color: Colors.red,
+        child: CustomPaint(
+            foregroundPainter: widget.controller.painter,
+
+            child: controllerProvider),
       ),
     );
   }
+
+
 
   AnimatedWidget _defaultRoutePageBuilder(
       BuildContext context,
@@ -277,6 +293,27 @@ class _BetterPlayerState extends State<BetterPlayer>
     super.didChangeAppLifecycleState(state);
     widget.controller.setAppLifecycleState(state);
   }
+}
+
+class OpenPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+
+    var a=size.width;
+
+    var paint1 = Paint()
+      ..color = Colors.blue
+      ..strokeWidth=1
+      ..style = PaintingStyle.stroke;
+
+
+    canvas.drawRect(Offset(a/2,30) & Size(40, 40), paint1);
+
+
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
 
 ///Page route builder used in fullscreen mode.
