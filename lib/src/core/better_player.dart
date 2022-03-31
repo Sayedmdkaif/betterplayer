@@ -176,16 +176,10 @@ class _BetterPlayerState extends State<BetterPlayer>
       BuildContext context,
       Animation<double> animation,
       BetterPlayerControllerProvider controllerProvider) {
-
-  var width=  MediaQuery.of(context).size.width;
-  var height=  MediaQuery.of(context).size.height;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-
         alignment: Alignment.center,
-        color: Colors.red,
         child: CustomPaint(
             foregroundPainter: widget.controller.painter,
 
